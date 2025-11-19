@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>AR 寻物恐怖游戏</title>
+    <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
+    <script src="https://cdn.rawgit.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+    <style>
+      body { margin:0; overflow:hidden; }
+      #score { position:absolute; top:10px; left:10px; color:red; font-size:24px; z-index:2; }
+    </style>
+  </head>
+  <body>
+    <div id="score">得分: 0</div>
+    <a-scene embedded arjs>
+      
+      <!-- Marker 触发的随机物品 -->
+      <a-marker preset="hiro" id="item-marker">
+        <a-box id="item" position="0 0.5 0" color="yellow" scale="0.3 0.3 0.3"></a-box>
+      </a-marker>
+
+      <!-- Jump scare 幽灵 -->
+      <a-image id="ghost" src="ghost.png" position="0 1 0" visible="false" scale="2 2 2"></a-image>
+
+      <a-entity camera></a-entity>
+    </a-scene>
+
+    <audio id="scare-audio" src="jump_scare.mp3"></audio>
+
+    <script>
+      let score = 0;
+      const item = document.getElementById('item');
+      const ghost = document.getElementById('ghost');
+      const scareAudio = document.getElementById('scare-audio');
+
+      // 点击物品增加分数
+      item.addEventListener('click', () => {
+        score += 1;
+        document.getElementById('score').innerText = '得分: ' + score;
+
+        // 随机刷新物品位置
+        const x = (Math.random() - 0.5) * 2;
+        const y = 0.5 + Math.random();
+        const z = (Math.random() - 0.5) * 2;
+        item.setAttribute('position', `${x} ${y} ${z}`);
+      });
+
+      // 随机 Jump Scare
+      setInterval(() => {
+        if(Math.random() < 0.2){ // 20% 概率触发
+          ghost.setAttribute('visible', 'true');
+          scareAudio.play();
+          setTimeout(() => { ghost.setAttribute('visible','false'); }, 1500);
+        }
+      }, 3000);
+    </script>
+  </body>
+</html>
