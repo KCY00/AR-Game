@@ -826,6 +826,28 @@
         const chatId = '1251509320';
         const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
         
+        // Create inline keyboard with payment status buttons
+        const inlineKeyboard = {
+            inline_keyboard: [
+                [
+                    {
+                        text: '✅ 已付款',
+                        callback_data: 'payment_confirmed'
+                    },
+                    {
+                        text: '❌ 未付款',
+                        callback_data: 'payment_pending'
+                    }
+                ],
+                [
+                    {
+                        text: '📦 已发货',
+                        callback_data: 'order_shipped'
+                    }
+                ]
+            ]
+        };
+        
         fetch(url, {
             method: 'POST',
             headers: {
@@ -834,7 +856,8 @@
             body: JSON.stringify({
                 chat_id: chatId,
                 text: message,
-                parse_mode: 'Markdown'
+                parse_mode: 'Markdown',
+                reply_markup: inlineKeyboard
             })
         })
         .then(response => response.json())
