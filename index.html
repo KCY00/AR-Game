@@ -871,8 +871,10 @@
         });
     }
 
-    // Initialize
-    renderProducts();
+    // Initialize when DOM is ready
+    document.addEventListener('DOMContentLoaded', function() {
+        renderProducts();
+    });
 </script>
 ```
 
