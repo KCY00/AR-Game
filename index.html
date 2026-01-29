@@ -432,6 +432,16 @@
 
     let cart = [];
     let selectedPrices = {}; // Track selected price for each product
+    
+    // Generate unique order number
+    function generateOrderNumber() {
+        const now = new Date();
+        const year = now.getFullYear().toString().slice(-2);
+        const month = String(now.getMonth() + 1).padStart(2, '0');
+        const day = String(now.getDate()).padStart(2, '0');
+        const random = Math.floor(Math.random() * 9000) + 1000; // 4-digit random number
+        return `ORD${year}${month}${day}${random}`;
+    }
 
     // Initialize selected prices (default to price 1)
     products.forEach(product => {
@@ -636,6 +646,9 @@
             return;
         }
         
+        // Generate order number
+        const orderNumber = generateOrderNumber();
+        
         const total = cart.reduce((sum, item) => sum + (item.quantity * item.selectedPrice), 0);
         const totalDeposit = cart.reduce((sum, item) => {
             if (item.priceOption === 2) {
@@ -644,25 +657,9 @@
             return sum + (item.quantity * item.selectedPrice);
         }, 0);
         
-        // Build order summary for display
-        let orderSummary = '=== 订单详情 ===\n\n';
-        cart.forEach(item => {
-            const planName = item.priceOption === 1 ? '方案一' : '方案二';
-            orderSummary += `${item.name} (${planName})\n`;
-            orderSummary += `数量: ${item.quantity}\n`;
-            orderSummary += `单价: RM ${item.selectedPrice.toFixed(2)}\n`;
-            if (item.priceOption === 2) {
-                const deposit = (item.selectedPrice * 0.425).toFixed(2);
-                orderSummary += `订金: RM ${deposit} × ${item.quantity} = RM ${(deposit * item.quantity).toFixed(2)}\n`;
-            }
-            orderSummary += `\n`;
-        });
-        
-        orderSummary += `商品总额: RM ${total.toFixed(2)}\n`;
-        orderSummary += `需付金额: RM ${totalDeposit.toFixed(2)}\n\n`;
-        
-        // Build Telegram message with better formatting
+        // Build Telegram message with order number
         let telegramMessage = '🛒 *新订单通知*\n\n';
+        telegramMessage += `📋 *订单编号:* \`${orderNumber}\`\n`;
         telegramMessage += '━━━━━━━━━━━━━━━━\n';
         
         cart.forEach((item, index) => {
@@ -696,70 +693,31 @@
         // Send to Telegram
         sendToTelegram(telegramMessage);
         
-        // Show confirmation and redirect to TNG payment
-        alert(orderSummary + '\n正在跳转到 Touch \'n Go 付款页面...');
+        // Show payment options modal
+        showPaymentOptions(orderNumber, totalDeposit);
         
         // Clear cart
         cart = [];
         updateCart();
         toggleCart();
-        
-        // Redirect to TNG payment with a small delay
-        setTimeout(() => {
-            redirectToTNG(totalDeposit);
-        }, 1000);
     }
     
-    function redirectToTNG(amount) {
-        // TNG payment details
-        const tngPhone = '0172251329';
-        const formattedAmount = amount.toFixed(2);
-        
-        // Try to open TNG app with deep link
-        const tngDeepLink = `tngd://transfer?mobile=${tngPhone}&amount=${formattedAmount}`;
-        
-        // Create a temporary link to attempt opening TNG app
-        const link = document.createElement('a');
-        link.href = tngDeepLink;
-        link.target = '_blank';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        
-        // Fallback: Show payment instructions if app doesn't open
-        setTimeout(() => {
-            const fallbackMessage = `
-                如果 Touch 'n Go 应用未自动打开，请手动操作：
-                
-                📱 打开 Touch 'n Go 应用
-                💸 转账/付款
-                📞 收款号码: ${tngPhone}
-                💰 金额: RM ${formattedAmount}
-                
-                完成付款后，请截图发送给卖家确认！
-            `;
-            
-            // Show instructions in a modal-like alert
-            if (!document.getElementById('tng-modal')) {
-                showTNGInstructions(tngPhone, formattedAmount);
-            }
-        }, 2000);
-    }
-    
-    function showTNGInstructions(phone, amount) {
+    function showPaymentOptions(orderNumber, amount) {
         const modal = document.createElement('div');
-        modal.id = 'tng-modal';
+        modal.id = 'payment-modal';
         modal.style.cssText = `
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.8);
+            background: rgba(0,0,0,0.85);
             display: flex;
             justify-content: center;
             align-items: center;
             z-index: 10000;
+            overflow-y: auto;
+            padding: 20px;
         `;
         
         modal.innerHTML = `
@@ -767,58 +725,129 @@
                 background: white;
                 padding: 40px;
                 border-radius: 20px;
-                max-width: 500px;
-                width: 90%;
+                max-width: 600px;
+                width: 100%;
                 text-align: center;
-                box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+                box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+                max-height: 90vh;
+                overflow-y: auto;
             ">
-                <div style="font-size: 60px; margin-bottom: 20px;">💳</div>
-                <h2 style="color: #333; margin-bottom: 20px;">Touch 'n Go 付款指南</h2>
+                <div style="font-size: 60px; margin-bottom: 20px;">✅</div>
+                <h2 style="color: #333; margin-bottom: 10px;">订单已提交！</h2>
+                <div style="background: #f0f4ff; padding: 15px; border-radius: 10px; margin: 20px 0;">
+                    <div style="font-size: 0.9em; color: #666; margin-bottom: 5px;">订单编号</div>
+                    <div style="font-size: 1.8em; font-weight: bold; color: #667eea; font-family: monospace;">${orderNumber}</div>
+                </div>
                 
-                <div style="background: #f8f9fa; padding: 25px; border-radius: 15px; margin: 20px 0; text-align: left;">
-                    <div style="margin-bottom: 15px;">
-                        <span style="color: #666;">📱 收款号码：</span><br>
-                        <strong style="font-size: 24px; color: #667eea;">${phone}</strong>
+                <div style="background: #f8f9fa; padding: 20px; border-radius: 15px; margin: 20px 0;">
+                    <div style="font-size: 1.1em; color: #666; margin-bottom: 10px;">需付金额</div>
+                    <div style="font-size: 2.2em; font-weight: bold; color: #28a745;">RM ${amount.toFixed(2)}</div>
+                </div>
+                
+                <h3 style="color: #333; margin: 30px 0 20px 0; font-size: 1.3em;">💳 收款选项</h3>
+                
+                <div style="display: flex; flex-direction: column; gap: 15px; margin: 20px 0;">
+                    <!-- TNG Option -->
+                    <div style="
+                        background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+                        padding: 20px;
+                        border-radius: 15px;
+                        color: white;
+                        text-align: left;
+                        cursor: pointer;
+                        transition: transform 0.2s;
+                    " onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+                        <div style="font-size: 1.5em; margin-bottom: 10px;">📱 Touch 'n Go</div>
+                        <div style="font-size: 1.1em; opacity: 0.9;">手机号码: 0172251329</div>
                     </div>
-                    <div>
-                        <span style="color: #666;">💰 付款金额：</span><br>
-                        <strong style="font-size: 28px; color: #28a745;">RM ${amount}</strong>
+                    
+                    <!-- Duitnow Option -->
+                    <div style="
+                        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+                        padding: 20px;
+                        border-radius: 15px;
+                        color: white;
+                        text-align: left;
+                        cursor: pointer;
+                        transition: transform 0.2s;
+                    " onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+                        <div style="font-size: 1.5em; margin-bottom: 10px;">🏦 DuitNow</div>
+                        <div style="font-size: 1.1em; opacity: 0.9;">手机号码: 0172251329</div>
+                    </div>
+                    
+                    <!-- USDT Option -->
+                    <div style="
+                        background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+                        padding: 20px;
+                        border-radius: 15px;
+                        color: white;
+                        text-align: left;
+                        cursor: pointer;
+                        transition: transform 0.2s;
+                    " onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+                        <div style="font-size: 1.5em; margin-bottom: 10px;">💎 USDT (TRC20)</div>
+                        <div style="font-size: 0.95em; opacity: 0.9; word-break: break-all;">
+                            地址: TVfJAv4pQ8h8R7zYc3M2nKdXwPzJ8eHqNm
+                        </div>
                     </div>
                 </div>
                 
-                <div style="background: #fff3cd; padding: 15px; border-radius: 10px; border-left: 4px solid #ffc107; margin: 20px 0; text-align: left;">
-                    <strong>📝 付款步骤：</strong><br>
-                    1️⃣ 打开 Touch 'n Go 应用<br>
-                    2️⃣ 选择 "转账" 或 "付款"<br>
-                    3️⃣ 输入收款号码：${phone}<br>
-                    4️⃣ 输入金额：RM ${amount}<br>
-                    5️⃣ 完成付款并截图<br>
-                    6️⃣ 将截图发送给卖家确认
+                <div style="background: #fff3cd; padding: 15px; border-radius: 10px; border-left: 4px solid #ffc107; margin: 25px 0; text-align: left;">
+                    <strong>📝 付款提醒：</strong><br>
+                    1️⃣ 请使用以上任一方式付款<br>
+                    2️⃣ 付款后请截图保存<br>
+                    3️⃣ 点击下方按钮联系商家<br>
+                    4️⃣ 发送订单编号和付款截图
                 </div>
                 
-                <button onclick="closeTNGModal()" style="
+                <button onclick="contactMerchant('${orderNumber}', ${amount.toFixed(2)})" style="
                     width: 100%;
-                    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                    background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
                     color: white;
                     border: none;
-                    padding: 15px;
-                    border-radius: 10px;
-                    font-size: 18px;
+                    padding: 18px;
+                    border-radius: 12px;
+                    font-size: 1.3em;
                     font-weight: bold;
                     cursor: pointer;
                     margin-top: 20px;
-                ">我知道了</button>
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 10px;
+                    transition: all 0.3s;
+                " onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+                    <span style="font-size: 1.2em;">💬</span>
+                    联系商家
+                </button>
             </div>
         `;
         
         document.body.appendChild(modal);
     }
     
-    function closeTNGModal() {
-        const modal = document.getElementById('tng-modal');
+    function contactMerchant(orderNumber, amount) {
+        // Close payment modal
+        const modal = document.getElementById('payment-modal');
         if (modal) {
             modal.remove();
         }
+        
+        // Prepare WhatsApp message
+        const message = `您好！我已下单
+```
+
+📋 订单编号: ${orderNumber}
+💰 金额: RM ${amount}
+
+我已完成付款，现发送付款截图确认。`;
+
+```
+        const encodedMessage = encodeURIComponent(message);
+        const whatsappUrl = `https://wa.me/60172251329?text=${encodedMessage}`;
+        
+        // Open WhatsApp
+        window.open(whatsappUrl, '_blank');
     }
     
     function sendToTelegram(message) {
