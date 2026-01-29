@@ -12,7 +12,6 @@
             box-sizing: border-box;
         }
 
-```
     body {
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -335,7 +334,6 @@
         }
     }
 </style>
-```
 
 </head>
 <body>
@@ -347,7 +345,6 @@
             </button>
         </header>
 
-```
     <div class="products-grid" id="productsGrid"></div>
 </div>
 
@@ -365,69 +362,13 @@
 
 <script>
     const products = [
-        {
-            id: 1,
-            model: "WE-G001A-BK",
-            name: "G17-BK-A-GEN3",
-            description: "黑色 Gen3",
-            image: "./G17-BK-A-GEN3.jpg.jpg
-            price1: 1350.00,
-            price2: 1670.00
-        },
-        {
-            id: 2,
-            model: "WE-G001A-TAN",
-            name: "G17-TAN-A-GEN3",
-            description: "棕色 Gen3",
-            image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='150'%3E%3Crect fill='%23a67c52' width='300' height='150'/%3E%3Ctext x='50%25' y='50%25' font-size='20' fill='%23fff' text-anchor='middle' dominant-baseline='middle'%3EG17-TAN-GEN3%3C/text%3E%3C/svg%3E",
-            price1: 1350.00,
-            price2: 1670.00
-        },
-        {
-            id: 3,
-            model: "WE-G001A-SV",
-            name: "G17-SV-A-GEN3",
-            description: "银色 Gen3",
-            image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='150'%3E%3Crect fill='%23c0c0c0' width='300' height='150'/%3E%3Ctext x='50%25' y='50%25' font-size='20' fill='%23333' text-anchor='middle' dominant-baseline='middle'%3EG17-SV-GEN3%3C/text%3E%3C/svg%3E",
-            price1: 1350.00,
-            price2: 1670.00
-        },
-        {
-            id: 4,
-            model: "WE-G001B-BK",
-            name: "G17-BK-B-GEN4",
-            description: "黑色 Gen4",
-            image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='150'%3E%3Crect fill='%23222' width='300' height='150'/%3E%3Ctext x='50%25' y='50%25' font-size='20' fill='%23fff' text-anchor='middle' dominant-baseline='middle'%3EG17-BK-GEN4%3C/text%3E%3C/svg%3E",
-            price1: 1350.00,
-            price2: 1670.00
-        },
-        {
-            id: 5,
-            model: "WE-G001B-TAN",
-            name: "G17-TAN-B-GEN4",
-            description: "棕色 Gen4",
-            image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='150'%3E%3Crect fill='%23d4b896' width='300' height='150'/%3E%3Ctext x='50%25' y='50%25' font-size='20' fill='%23333' text-anchor='middle' dominant-baseline='middle'%3EG17-TAN-GEN4%3C/text%3E%3C/svg%3E",
-            price1: 1430.00,
-            price2: 1750.00
-        },
-        {
-            id: 6,
-            model: "WE-G001B-SV",
-            name: "G17-SV-B-GEN4",
-            description: "银色 Gen4",
-            image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='150'%3E%3Crect fill='%23d3d3d3' width='300' height='150'/%3E%3Ctext x='50%25' y='50%25' font-size='20' fill='%23333' text-anchor='middle' dominant-baseline='middle'%3EG17-SV-GEN4%3C/text%3E%3C/svg%3E",
-            price1: 1560.00,
-            price2: 1880.00
-        },
-        {
-            id: 7,
-            model: "WE-G002A-BK",
-            name: "G18-BK-A-GEN3",
-            description: "黑色 Gen3",
-            image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='150'%3E%3Crect fill='%23111' width='300' height='150'/%3E%3Ctext x='50%25' y='50%25' font-size='20' fill='%23fff' text-anchor='middle' dominant-baseline='middle'%3EG18-BK-GEN3%3C/text%3E%3C/svg%3E",
-            price1: 1430.00,
-            price2: 1750.00
-        }
+        { id: 1, model: "WE-G001A-BK", name: "G17-BK-A-GEN3", description: "黑色 Gen3", image: "https://via.placeholder.com/300x150.png?text=G17-BK-A-GEN3", price1: 1350.00, price2: 1670.00 },
+        { id: 2, model: "WE-G001A-TAN", name: "G17-TAN-A-GEN3", description: "棕色 Gen3", image: "https://via.placeholder.com/300x150.png?text=G17-TAN-A-GEN3", price1: 1350.00, price2: 1670.00 },
+        { id: 3, model: "WE-G001A-SV", name: "G17-SV-A-GEN3", description: "银色 Gen3", image: "https://via.placeholder.com/300x150.png?text=G17-SV-A-GEN3", price1: 1350.00, price2: 1670.00 },
+        { id: 4, model: "WE-G001B-BK", name: "G17-BK-B-GEN4", description: "黑色 Gen4", image: "https://via.placeholder.com/300x150.png?text=G17-BK-B-GEN4", price1: 1350.00, price2: 1670.00 },
+        { id: 5, model: "WE-G001B-TAN", name: "G17-TAN-B-GEN4", description: "棕色 Gen4", image: "https://via.placeholder.com/300x150.png?text=G17-TAN-B-GEN4", price1: 1430.00, price2: 1750.00 },
+        { id: 6, model: "WE-G001B-SV", name: "G17-SV-B-GEN4", description: "银色 Gen4", image: "https://via.placeholder.com/300x150.png?text=G17-SV-B-GEN4", price1: 1560.00, price2: 1880.00 },
+        { id: 7, model: "WE-G002A-BK", name: "G18-BK-A-GEN3", description: "黑色 Gen3", image: "https://via.placeholder.com/300x150.png?text=G18-BK-A-GEN3", price1: 1430.00, price2: 1750.00 }
     ];
 
     let cart = [];
@@ -440,11 +381,10 @@
 
     function selectPrice(productId, priceOption) {
         selectedPrices[productId] = priceOption;
-        
         // Update UI
         const price1Elem = document.getElementById(`price1-${productId}`);
         const price2Elem = document.getElementById(`price2-${productId}`);
-        
+        if (!price1Elem || !price2Elem) return;
         if (priceOption === 1) {
             price1Elem.classList.add('selected');
             price2Elem.classList.remove('selected');
@@ -472,7 +412,7 @@
                     <div class="price-option" onclick="selectPrice(${product.id}, 1)" id="price1-${product.id}">
                         <div class="price-header">
                             <div class="price-label">
-                                <input type="radio" name="price-${product.id}" class="price-radio" checked> 方案一
+                                <input type="radio" name="price-${product.id}" class="price-radio" ${selectedPrices[product.id] === 1 ? 'checked' : ''}> 方案一
                             </div>
                             <div class="price-value">RM ${product.price1.toFixed(2)}</div>
                         </div>
@@ -489,7 +429,7 @@
                     <div class="price-option" onclick="selectPrice(${product.id}, 2)" id="price2-${product.id}">
                         <div class="price-header">
                             <div class="price-label">
-                                <input type="radio" name="price-${product.id}" class="price-radio"> 方案二
+                                <input type="radio" name="price-${product.id}" class="price-radio" ${selectedPrices[product.id] === 2 ? 'checked' : ''}> 方案二
                             </div>
                             <div class="price-value">RM ${product.price2.toFixed(2)}</div>
                         </div>
@@ -509,47 +449,50 @@
                         </div>
                     </div>
                 </div>
-                <button class="add-to-cart" onclick="addToCart(${product.id})">
+                <button class="add-to-cart" onclick="addToCart(this, ${product.id})">
                     🛒 加入购物车
                 </button>
             </div>
         `).join('');
-        
-        // Set default selected price
+        // Set default selected price classes
         products.forEach(product => {
-            document.getElementById(`price1-${product.id}`).classList.add('selected');
+            const selected = selectedPrices[product.id] === 1 ? 'price1' : 'price2';
+            const elem1 = document.getElementById(`price1-${product.id}`);
+            const elem2 = document.getElementById(`price2-${product.id}`);
+            if (elem1 && elem2) {
+                if (selected === 'price1') {
+                    elem1.classList.add('selected');
+                    elem2.classList.remove('selected');
+                } else {
+                    elem2.classList.add('selected');
+                    elem1.classList.remove('selected');
+                }
+            }
         });
     }
 
-    function addToCart(productId) {
+    function addToCart(button, productId) {
         const product = products.find(p => p.id === productId);
-        const priceOption = selectedPrices[productId];
+        const priceOption = selectedPrices[productId] || 1;
         const selectedPrice = priceOption === 1 ? product.price1 : product.price2;
-        
         const existingItem = cart.find(item => item.id === productId && item.priceOption === priceOption);
-        
         if (existingItem) {
             existingItem.quantity++;
         } else {
-            cart.push({
-                ...product,
-                quantity: 1,
-                priceOption: priceOption,
-                selectedPrice: selectedPrice
-            });
+            cart.push({ ...product, quantity: 1, priceOption: priceOption, selectedPrice: selectedPrice });
         }
-        
         updateCart();
-        
         // Show feedback
-        const button = event.target;
-        const originalText = button.textContent;
-        button.textContent = '✓ 已添加!';
-        button.style.background = '#2ecc71';
-        setTimeout(() => {
-            button.textContent = originalText;
-            button.style.background = '';
-        }, 1000);
+        if (button) {
+            const originalText = button.textContent;
+            const originalBg = button.style.background;
+            button.textContent = '✓ 已添加!';
+            button.style.background = '#2ecc71';
+            setTimeout(() => {
+                button.textContent = originalText;
+                button.style.background = originalBg;
+            }, 1000);
+        }
     }
 
     function removeFromCart(productId, priceOption) {
@@ -566,18 +509,15 @@
     function renderCart() {
         const cartItems = document.getElementById('cartItems');
         const cartTotal = document.getElementById('cartTotal');
-        
         if (cart.length === 0) {
             cartItems.innerHTML = '<div class="empty-cart">购物车是空的</div>';
             cartTotal.innerHTML = '';
             return;
         }
-        
         cartItems.innerHTML = cart.map(item => {
             const planName = item.priceOption === 1 ? '方案一（全额付款）' : '方案二（订金付款）';
-            const deposit = item.priceOption === 2 ? (item.selectedPrice * 0.425).toFixed(2) : item.selectedPrice.toFixed(2);
+            const depositPerUnit = item.priceOption === 2 ? (item.selectedPrice * 0.425) : item.selectedPrice;
             const insurance = item.priceOption === 1 ? '⚠️ 无全额保险' : '✅ 有全额保险';
-            
             return `
                 <div class="cart-item">
                     <div class="cart-item-info">
@@ -595,7 +535,7 @@
                         </div>
                         ${item.priceOption === 2 ? `
                             <div style="font-size: 0.85em; color: #28a745; margin-top: 5px; font-weight: 600;">
-                                💰 需付订金: RM ${(item.quantity * parseFloat(deposit)).toFixed(2)}
+                                💰 需付订金: RM ${(item.quantity * depositPerUnit).toFixed(2)}
                             </div>
                         ` : ''}
                     </div>
@@ -603,7 +543,6 @@
                 </div>
             `;
         }).join('');
-        
         const total = cart.reduce((sum, item) => sum + (item.quantity * item.selectedPrice), 0);
         const totalDeposit = cart.reduce((sum, item) => {
             if (item.priceOption === 2) {
@@ -611,7 +550,6 @@
             }
             return sum + (item.quantity * item.selectedPrice);
         }, 0);
-        
         cartTotal.innerHTML = `
             <div style="font-size: 0.9em; color: #666; margin-bottom: 10px;">
                 商品总额: RM ${total.toFixed(2)}
@@ -632,10 +570,9 @@
 
     function checkout() {
         if (cart.length === 0) {
-            alert('购物车是空的！');
+            alert('购物车是空���！');
             return;
         }
-        
         const total = cart.reduce((sum, item) => sum + (item.quantity * item.selectedPrice), 0);
         const totalDeposit = cart.reduce((sum, item) => {
             if (item.priceOption === 2) {
@@ -643,7 +580,6 @@
             }
             return sum + (item.quantity * item.selectedPrice);
         }, 0);
-        
         // Build order summary for display
         let orderSummary = '=== 订单详情 ===\n\n';
         cart.forEach(item => {
@@ -652,24 +588,20 @@
             orderSummary += `数量: ${item.quantity}\n`;
             orderSummary += `单价: RM ${item.selectedPrice.toFixed(2)}\n`;
             if (item.priceOption === 2) {
-                const deposit = (item.selectedPrice * 0.425).toFixed(2);
-                orderSummary += `订金: RM ${deposit} × ${item.quantity} = RM ${(deposit * item.quantity).toFixed(2)}\n`;
+                const depositNum = (item.selectedPrice * 0.425);
+                orderSummary += `订金: RM ${depositNum.toFixed(2)} × ${item.quantity} = RM ${(depositNum * item.quantity).toFixed(2)}\n`;
             }
             orderSummary += `\n`;
         });
-        
         orderSummary += `商品总额: RM ${total.toFixed(2)}\n`;
         orderSummary += `需付金额: RM ${totalDeposit.toFixed(2)}\n\n`;
         orderSummary += '感谢您的订单！我们会尽快处理。';
-        
         // Build Telegram message with better formatting
         let telegramMessage = '🛒 *新订单通知*\n\n';
         telegramMessage += '━━━━━━━━━━━━━━━━\n';
-        
         cart.forEach((item, index) => {
             const planName = item.priceOption === 1 ? '方案一（全额付款）' : '方案二（订金付款）';
             const insurance = item.priceOption === 1 ? '⚠️ 无全额保险' : '✅ 有全额保险';
-            
             telegramMessage += `\n*商品 ${index + 1}:*\n`;
             telegramMessage += `📦 ${item.name}\n`;
             telegramMessage += `🏷️ 型号: ${item.model}\n`;
@@ -677,64 +609,51 @@
             telegramMessage += `${insurance}\n`;
             telegramMessage += `📊 数量: ${item.quantity}\n`;
             telegramMessage += `💰 单价: RM ${item.selectedPrice.toFixed(2)}\n`;
-            
             if (item.priceOption === 2) {
-                const deposit = (item.selectedPrice * 0.425).toFixed(2);
-                telegramMessage += `💵 订金: RM ${deposit} × ${item.quantity} = RM ${(deposit * item.quantity).toFixed(2)}\n`;
+                const depositNum = (item.selectedPrice * 0.425);
+                telegramMessage += `💵 订金: RM ${depositNum.toFixed(2)} × ${item.quantity} = RM ${(depositNum * item.quantity).toFixed(2)}\n`;
                 telegramMessage += `📝 到货后付清尾款才发货\n`;
             } else {
                 telegramMessage += `💵 需付: RM ${(item.selectedPrice * item.quantity).toFixed(2)}\n`;
             }
-            telegramMessage += '\n';
+            telegramMessage += `\n`;
         });
-        
         telegramMessage += '━━━━━━━━━━━━━━━━\n';
         telegramMessage += `\n💎 *商品总额:* RM ${total.toFixed(2)}\n`;
         telegramMessage += `💰 *需付金额:* RM ${totalDeposit.toFixed(2)}\n\n`;
         telegramMessage += `⏰ 订单时间: ${new Date().toLocaleString('zh-CN', { timeZone: 'Asia/Kuala_Lumpur' })}\n`;
-        
-        // Send to Telegram
+        // Send to Telegram (TOKEN/CHAT_ID removed for safety; set your own in production)
         sendToTelegram(telegramMessage);
-        
         alert(orderSummary);
         cart = [];
         updateCart();
         toggleCart();
     }
-    
     function sendToTelegram(message) {
-        const botToken = '8305942321:AAHu9R5EdqjVbu1mejiYMbOe98dVKBqn3_4';
-        const chatId = '1251509320';
+        // SECURITY: Do NOT commit real bot tokens to source code. Replace the placeholders with your secure bot token and chat id on the server side.
+        const botToken = 'YOUR_TELEGRAM_BOT_TOKEN';
+        const chatId = 'YOUR_CHAT_ID';
+        if (!botToken || botToken === 'YOUR_TELEGRAM_BOT_TOKEN') {
+            console.warn('Telegram bot token not configured. Skipping send. Message: ', message);
+            return;
+        }
         const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
-        
         fetch(url, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                chat_id: chatId,
-                text: message,
-                parse_mode: 'Markdown'
-            })
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ chat_id: chatId, text: message, parse_mode: 'Markdown' })
         })
         .then(response => response.json())
         .then(data => {
-            if (data.ok) {
-                console.log('订单已发送到 Telegram');
-            } else {
-                console.error('Telegram 发送失败:', data);
-            }
+            if (data.ok) console.log('订单已发送到 Telegram');
+            else console.error('Telegram 发送失败:', data);
         })
-        .catch(error => {
-            console.error('发送错误:', error);
-        });
+        .catch(error => console.error('发送错误:', error));
     }
 
     // Initialize
     renderProducts();
 </script>
-```
 
 </body>
 </html>
