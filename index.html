@@ -1,6 +1,740 @@
-<!-- Placeholders in the HTML file -->
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>G系列气枪商店 | Airsoft Shop</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+```
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        padding: 20px;
+    }
+
+    .container {
+        max-width: 1400px;
+        margin: 0 auto;
+    }
+
+    header {
+        background: white;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        margin-bottom: 30px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    h1 {
+        color: #333;
+        font-size: 2.5em;
+    }
+
+    .cart-button {
+        background: #667eea;
+        color: white;
+        border: none;
+        padding: 15px 30px;
+        border-radius: 25px;
+        cursor: pointer;
+        font-size: 1.1em;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        transition: all 0.3s;
+    }
+
+    .cart-button:hover {
+        background: #764ba2;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+
+    .cart-count {
+        background: #ff4757;
+        border-radius: 50%;
+        padding: 5px 10px;
+        font-weight: bold;
+    }
+
+    .products-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+        gap: 30px;
+        margin-bottom: 30px;
+    }
+
+    .product-card {
+        background: white;
+        border-radius: 15px;
+        padding: 25px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .product-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+    }
+
+    .product-image {
+        width: 100%;
+        height: 200px;
+        object-fit: contain;
+        margin-bottom: 20px;
+        background: #f8f9fa;
+        border-radius: 10px;
+        padding: 10px;
+    }
+
+    .product-title {
+        font-size: 1.1em;
+        font-weight: bold;
+        color: #333;
+        margin-bottom: 15px;
+        min-height: 50px;
+    }
+
+    .price-section {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        margin-bottom: 20px;
+    }
+
+    .price-option {
+        padding: 20px;
+        background: #f8f9fa;
+        border-radius: 10px;
+        border: 2px solid transparent;
+        transition: all 0.3s;
+        cursor: pointer;
+    }
+
+    .price-option:hover {
+        border-color: #667eea;
+        background: #fff;
+        box-shadow: 0 3px 10px rgba(102, 126, 234, 0.1);
+    }
+
+    .price-option.selected {
+        border-color: #667eea;
+        background: #f0f4ff;
+    }
+
+    .price-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+
+    .price-label {
+        font-size: 1em;
+        font-weight: bold;
+        color: #333;
+    }
+
+    .price-value {
+        font-size: 1.4em;
+        font-weight: bold;
+        color: #667eea;
+    }
+
+    .payment-method {
+        font-size: 0.95em;
+        color: #555;
+        margin-bottom: 8px;
+        padding: 8px;
+        background: white;
+        border-radius: 5px;
+    }
+
+    .insurance-info {
+        font-size: 0.9em;
+        padding: 10px;
+        border-radius: 5px;
+        margin-top: 8px;
+    }
+
+    .insurance-no {
+        background: #fff3cd;
+        border-left: 4px solid #ffc107;
+        color: #856404;
+    }
+
+    .insurance-yes {
+        background: #d4edda;
+        border-left: 4px solid #28a745;
+        color: #155724;
+    }
+
+    .insurance-icon {
+        margin-right: 5px;
+    }
+
+    .price-radio {
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
+    }
+
+    .deposit-info {
+        font-size: 0.85em;
+        color: #667eea;
+        font-weight: 600;
+        margin-top: 5px;
+    }
+
+    .add-to-cart {
+        width: 100%;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+        padding: 15px;
+        border-radius: 10px;
+        cursor: pointer;
+        font-size: 1.1em;
+        font-weight: bold;
+        transition: all 0.3s;
+    }
+
+    .add-to-cart:hover {
+        transform: scale(1.05);
+        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+    }
+
+    .cart-modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.7);
+        z-index: 1000;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .cart-modal.active {
+        display: flex;
+    }
+
+    .cart-content {
+        background: white;
+        padding: 30px;
+        border-radius: 15px;
+        max-width: 600px;
+        width: 90%;
+        max-height: 80vh;
+        overflow-y: auto;
+    }
+
+    .cart-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        padding-bottom: 15px;
+        border-bottom: 2px solid #eee;
+    }
+
+    .close-cart {
+        background: #ff4757;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+    .cart-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px;
+        margin-bottom: 10px;
+        background: #f8f9fa;
+        border-radius: 10px;
+    }
+
+    .cart-item-info {
+        flex: 1;
+    }
+
+    .cart-item-remove {
+        background: #ff4757;
+        color: white;
+        border: none;
+        padding: 8px 15px;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-left: 10px;
+    }
+
+    .cart-total {
+        margin-top: 20px;
+        padding-top: 20px;
+        border-top: 2px solid #eee;
+        text-align: right;
+        font-size: 1.5em;
+        font-weight: bold;
+        color: #667eea;
+    }
+
+    .checkout-btn {
+        width: 100%;
+        background: #2ecc71;
+        color: white;
+        border: none;
+        padding: 15px;
+        border-radius: 10px;
+        cursor: pointer;
+        font-size: 1.2em;
+        font-weight: bold;
+        margin-top: 20px;
+        transition: all 0.3s;
+    }
+
+    .checkout-btn:hover {
+        background: #27ae60;
+        transform: scale(1.02);
+    }
+
+    .empty-cart {
+        text-align: center;
+        padding: 40px;
+        color: #666;
+    }
+
+    @media (max-width: 768px) {
+        .products-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        header {
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        h1 {
+            font-size: 1.8em;
+        }
+    }
+</style>
+```
+
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎯 G系列气枪商店</h1>
+            <button class="cart-button" onclick="toggleCart()">
+                🛒 购物车 <span class="cart-count" id="cartCount">0</span>
+            </button>
+        </header>
+
+```
+    <div class="products-grid" id="productsGrid"></div>
+</div>
+
+<div class="cart-modal" id="cartModal">
+    <div class="cart-content">
+        <div class="cart-header">
+            <h2>购物车</h2>
+            <button class="close-cart" onclick="toggleCart()">关闭</button>
+        </div>
+        <div id="cartItems"></div>
+        <div class="cart-total" id="cartTotal"></div>
+        <button class="checkout-btn" onclick="checkout()">立即结账</button>
+    </div>
+</div>
+
 <script>
-  const TELEGRAM_BOT_TOKEN = "8305942321:AAHu9R5EdqjVbu1mejiYMbOe98dVKBqn3_4";
-  const TELEGRAM_CHAT_ID = "1251509320";
+    const products = [
+        {
+            id: 1,
+            model: "WE-G001A-BK",
+            name: "G17-BK-A-GEN3",
+            description: "黑色 Gen3",
+            image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='150'%3E%3Crect fill='%23333' width='300' height='150'/%3E%3Ctext x='50%25' y='50%25' font-size='20' fill='%23fff' text-anchor='middle' dominant-baseline='middle'%3EG17-BK-GEN3%3C/text%3E%3C/svg%3E",
+            price1: 1350.00,
+            price2: 1670.00
+        },
+        {
+            id: 2,
+            model: "WE-G001A-TAN",
+            name: "G17-TAN-A-GEN3",
+            description: "棕色 Gen3",
+            image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='150'%3E%3Crect fill='%23a67c52' width='300' height='150'/%3E%3Ctext x='50%25' y='50%25' font-size='20' fill='%23fff' text-anchor='middle' dominant-baseline='middle'%3EG17-TAN-GEN3%3C/text%3E%3C/svg%3E",
+            price1: 1350.00,
+            price2: 1670.00
+        },
+        {
+            id: 3,
+            model: "WE-G001A-SV",
+            name: "G17-SV-A-GEN3",
+            description: "银色 Gen3",
+            image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='150'%3E%3Crect fill='%23c0c0c0' width='300' height='150'/%3E%3Ctext x='50%25' y='50%25' font-size='20' fill='%23333' text-anchor='middle' dominant-baseline='middle'%3EG17-SV-GEN3%3C/text%3E%3C/svg%3E",
+            price1: 1350.00,
+            price2: 1670.00
+        },
+        {
+            id: 4,
+            model: "WE-G001B-BK",
+            name: "G17-BK-B-GEN4",
+            description: "黑色 Gen4",
+            image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='150'%3E%3Crect fill='%23222' width='300' height='150'/%3E%3Ctext x='50%25' y='50%25' font-size='20' fill='%23fff' text-anchor='middle' dominant-baseline='middle'%3EG17-BK-GEN4%3C/text%3E%3C/svg%3E",
+            price1: 1350.00,
+            price2: 1670.00
+        },
+        {
+            id: 5,
+            model: "WE-G001B-TAN",
+            name: "G17-TAN-B-GEN4",
+            description: "棕色 Gen4",
+            image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='150'%3E%3Crect fill='%23d4b896' width='300' height='150'/%3E%3Ctext x='50%25' y='50%25' font-size='20' fill='%23333' text-anchor='middle' dominant-baseline='middle'%3EG17-TAN-GEN4%3C/text%3E%3C/svg%3E",
+            price1: 1430.00,
+            price2: 1750.00
+        },
+        {
+            id: 6,
+            model: "WE-G001B-SV",
+            name: "G17-SV-B-GEN4",
+            description: "银色 Gen4",
+            image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='150'%3E%3Crect fill='%23d3d3d3' width='300' height='150'/%3E%3Ctext x='50%25' y='50%25' font-size='20' fill='%23333' text-anchor='middle' dominant-baseline='middle'%3EG17-SV-GEN4%3C/text%3E%3C/svg%3E",
+            price1: 1560.00,
+            price2: 1880.00
+        },
+        {
+            id: 7,
+            model: "WE-G002A-BK",
+            name: "G18-BK-A-GEN3",
+            description: "黑色 Gen3",
+            image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='150'%3E%3Crect fill='%23111' width='300' height='150'/%3E%3Ctext x='50%25' y='50%25' font-size='20' fill='%23fff' text-anchor='middle' dominant-baseline='middle'%3EG18-BK-GEN3%3C/text%3E%3C/svg%3E",
+            price1: 1430.00,
+            price2: 1750.00
+        }
+    ];
+
+    let cart = [];
+    let selectedPrices = {}; // Track selected price for each product
+
+    // Initialize selected prices (default to price 1)
+    products.forEach(product => {
+        selectedPrices[product.id] = 1;
+    });
+
+    function selectPrice(productId, priceOption) {
+        selectedPrices[productId] = priceOption;
+        
+        // Update UI
+        const price1Elem = document.getElementById(`price1-${productId}`);
+        const price2Elem = document.getElementById(`price2-${productId}`);
+        
+        if (priceOption === 1) {
+            price1Elem.classList.add('selected');
+            price2Elem.classList.remove('selected');
+            price1Elem.querySelector('.price-radio').checked = true;
+            price2Elem.querySelector('.price-radio').checked = false;
+        } else {
+            price2Elem.classList.add('selected');
+            price1Elem.classList.remove('selected');
+            price2Elem.querySelector('.price-radio').checked = true;
+            price1Elem.querySelector('.price-radio').checked = false;
+        }
+    }
+
+    function renderProducts() {
+        const grid = document.getElementById('productsGrid');
+        grid.innerHTML = products.map(product => `
+            <div class="product-card">
+                <img src="${product.image}" alt="${product.name}" class="product-image">
+                <div class="product-title">
+                    <div style="font-size: 0.9em; color: #666;">${product.model}</div>
+                    <div>${product.name}</div>
+                    <div style="font-size: 0.9em; color: #888; margin-top: 5px;">${product.description}</div>
+                </div>
+                <div class="price-section">
+                    <div class="price-option" onclick="selectPrice(${product.id}, 1)" id="price1-${product.id}">
+                        <div class="price-header">
+                            <div class="price-label">
+                                <input type="radio" name="price-${product.id}" class="price-radio" checked> 方案一
+                            </div>
+                            <div class="price-value">RM ${product.price1.toFixed(2)}</div>
+                        </div>
+                        <div class="payment-method">
+                            💰 付款方式：需全额付款
+                        </div>
+                        <div class="insurance-info insurance-no">
+                            <span class="insurance-icon">⚠️</span>
+                            <strong>无全额保险</strong><br>
+                            如被海关拦截，最多退回10-15%
+                        </div>
+                    </div>
+                    
+                    <div class="price-option" onclick="selectPrice(${product.id}, 2)" id="price2-${product.id}">
+                        <div class="price-header">
+                            <div class="price-label">
+                                <input type="radio" name="price-${product.id}" class="price-radio"> 方案二
+                            </div>
+                            <div class="price-value">RM ${product.price2.toFixed(2)}</div>
+                        </div>
+                        <div class="payment-method">
+                            💰 付款方式：先付40-45%订金
+                        </div>
+                        <div class="deposit-info">
+                            订金约 RM ${(product.price2 * 0.425).toFixed(2)}
+                        </div>
+                        <div style="font-size: 0.85em; color: #666; margin: 8px 0;">
+                            到货后付清尾款才发货
+                        </div>
+                        <div class="insurance-info insurance-yes">
+                            <span class="insurance-icon">✅</span>
+                            <strong>有全额保险</strong><br>
+                            如被海关拦截，全额退回订金
+                        </div>
+                    </div>
+                </div>
+                <button class="add-to-cart" onclick="addToCart(${product.id})">
+                    🛒 加入购物车
+                </button>
+            </div>
+        `).join('');
+        
+        // Set default selected price
+        products.forEach(product => {
+            document.getElementById(`price1-${product.id}`).classList.add('selected');
+        });
+    }
+
+    function addToCart(productId) {
+        const product = products.find(p => p.id === productId);
+        const priceOption = selectedPrices[productId];
+        const selectedPrice = priceOption === 1 ? product.price1 : product.price2;
+        
+        const existingItem = cart.find(item => item.id === productId && item.priceOption === priceOption);
+        
+        if (existingItem) {
+            existingItem.quantity++;
+        } else {
+            cart.push({
+                ...product,
+                quantity: 1,
+                priceOption: priceOption,
+                selectedPrice: selectedPrice
+            });
+        }
+        
+        updateCart();
+        
+        // Show feedback
+        const button = event.target;
+        const originalText = button.textContent;
+        button.textContent = '✓ 已添加!';
+        button.style.background = '#2ecc71';
+        setTimeout(() => {
+            button.textContent = originalText;
+            button.style.background = '';
+        }, 1000);
+    }
+
+    function removeFromCart(productId, priceOption) {
+        cart = cart.filter(item => !(item.id === productId && item.priceOption === priceOption));
+        updateCart();
+        renderCart();
+    }
+
+    function updateCart() {
+        const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+        document.getElementById('cartCount').textContent = count;
+    }
+
+    function renderCart() {
+        const cartItems = document.getElementById('cartItems');
+        const cartTotal = document.getElementById('cartTotal');
+        
+        if (cart.length === 0) {
+            cartItems.innerHTML = '<div class="empty-cart">购物车是空的</div>';
+            cartTotal.innerHTML = '';
+            return;
+        }
+        
+        cartItems.innerHTML = cart.map(item => {
+            const planName = item.priceOption === 1 ? '方案一（全额付款）' : '方案二（订金付款）';
+            const deposit = item.priceOption === 2 ? (item.selectedPrice * 0.425).toFixed(2) : item.selectedPrice.toFixed(2);
+            const insurance = item.priceOption === 1 ? '⚠️ 无全额保险' : '✅ 有全额保险';
+            
+            return `
+                <div class="cart-item">
+                    <div class="cart-item-info">
+                        <div style="font-weight: bold;">${item.name}</div>
+                        <div style="color: #666; font-size: 0.9em;">${item.model}</div>
+                        <div style="margin-top: 5px; color: #667eea; font-weight: 600;">
+                            ${planName}
+                        </div>
+                        <div style="font-size: 0.85em; color: #888; margin-top: 3px;">
+                            ${insurance}
+                        </div>
+                        <div style="margin-top: 8px;">
+                            数量: ${item.quantity} × RM ${item.selectedPrice.toFixed(2)} = 
+                            <strong>RM ${(item.quantity * item.selectedPrice).toFixed(2)}</strong>
+                        </div>
+                        ${item.priceOption === 2 ? `
+                            <div style="font-size: 0.85em; color: #28a745; margin-top: 5px; font-weight: 600;">
+                                💰 需付订金: RM ${(item.quantity * parseFloat(deposit)).toFixed(2)}
+                            </div>
+                        ` : ''}
+                    </div>
+                    <button class="cart-item-remove" onclick="removeFromCart(${item.id}, ${item.priceOption})">删除</button>
+                </div>
+            `;
+        }).join('');
+        
+        const total = cart.reduce((sum, item) => sum + (item.quantity * item.selectedPrice), 0);
+        const totalDeposit = cart.reduce((sum, item) => {
+            if (item.priceOption === 2) {
+                return sum + (item.quantity * item.selectedPrice * 0.425);
+            }
+            return sum + (item.quantity * item.selectedPrice);
+        }, 0);
+        
+        cartTotal.innerHTML = `
+            <div style="font-size: 0.9em; color: #666; margin-bottom: 10px;">
+                商品总额: RM ${total.toFixed(2)}
+            </div>
+            <div style="color: #28a745;">
+                需付金额: RM ${totalDeposit.toFixed(2)}
+            </div>
+        `;
+    }
+
+    function toggleCart() {
+        const modal = document.getElementById('cartModal');
+        modal.classList.toggle('active');
+        if (modal.classList.contains('active')) {
+            renderCart();
+        }
+    }
+
+    function checkout() {
+        if (cart.length === 0) {
+            alert('购物车是空的！');
+            return;
+        }
+        
+        const total = cart.reduce((sum, item) => sum + (item.quantity * item.selectedPrice), 0);
+        const totalDeposit = cart.reduce((sum, item) => {
+            if (item.priceOption === 2) {
+                return sum + (item.quantity * item.selectedPrice * 0.425);
+            }
+            return sum + (item.quantity * item.selectedPrice);
+        }, 0);
+        
+        // Build order summary for display
+        let orderSummary = '=== 订单详情 ===\n\n';
+        cart.forEach(item => {
+            const planName = item.priceOption === 1 ? '方案一' : '方案二';
+            orderSummary += `${item.name} (${planName})\n`;
+            orderSummary += `数量: ${item.quantity}\n`;
+            orderSummary += `单价: RM ${item.selectedPrice.toFixed(2)}\n`;
+            if (item.priceOption === 2) {
+                const deposit = (item.selectedPrice * 0.425).toFixed(2);
+                orderSummary += `订金: RM ${deposit} × ${item.quantity} = RM ${(deposit * item.quantity).toFixed(2)}\n`;
+            }
+            orderSummary += `\n`;
+        });
+        
+        orderSummary += `商品总额: RM ${total.toFixed(2)}\n`;
+        orderSummary += `需付金额: RM ${totalDeposit.toFixed(2)}\n\n`;
+        orderSummary += '感谢您的订单！我们会尽快处理。';
+        
+        // Build Telegram message with better formatting
+        let telegramMessage = '🛒 *新订单通知*\n\n';
+        telegramMessage += '━━━━━━━━━━━━━━━━\n';
+        
+        cart.forEach((item, index) => {
+            const planName = item.priceOption === 1 ? '方案一（全额付款）' : '方案二（订金付款）';
+            const insurance = item.priceOption === 1 ? '⚠️ 无全额保险' : '✅ 有全额保险';
+            
+            telegramMessage += `\n*商品 ${index + 1}:*\n`;
+            telegramMessage += `📦 ${item.name}\n`;
+            telegramMessage += `🏷️ 型号: ${item.model}\n`;
+            telegramMessage += `💳 ${planName}\n`;
+            telegramMessage += `${insurance}\n`;
+            telegramMessage += `📊 数量: ${item.quantity}\n`;
+            telegramMessage += `💰 单价: RM ${item.selectedPrice.toFixed(2)}\n`;
+            
+            if (item.priceOption === 2) {
+                const deposit = (item.selectedPrice * 0.425).toFixed(2);
+                telegramMessage += `💵 订金: RM ${deposit} × ${item.quantity} = RM ${(deposit * item.quantity).toFixed(2)}\n`;
+                telegramMessage += `📝 到货后付清尾款才发货\n`;
+            } else {
+                telegramMessage += `💵 需付: RM ${(item.selectedPrice * item.quantity).toFixed(2)}\n`;
+            }
+            telegramMessage += '\n';
+        });
+        
+        telegramMessage += '━━━━━━━━━━━━━━━━\n';
+        telegramMessage += `\n💎 *商品总额:* RM ${total.toFixed(2)}\n`;
+        telegramMessage += `💰 *需付金额:* RM ${totalDeposit.toFixed(2)}\n\n`;
+        telegramMessage += `⏰ 订单时间: ${new Date().toLocaleString('zh-CN', { timeZone: 'Asia/Kuala_Lumpur' })}\n`;
+        
+        // Send to Telegram
+        sendToTelegram(telegramMessage);
+        
+        alert(orderSummary);
+        cart = [];
+        updateCart();
+        toggleCart();
+    }
+    
+    function sendToTelegram(message) {
+        const botToken = '8305942321:AAHu9R5EdqjVbu1mejiYMbOe98dVKBqn3_4';
+        const chatId = '1251509320';
+        const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
+        
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                chat_id: chatId,
+                text: message,
+                parse_mode: 'Markdown'
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.ok) {
+                console.log('订单已发送到 Telegram');
+            } else {
+                console.error('Telegram 发送失败:', data);
+            }
+        })
+        .catch(error => {
+            console.error('发送错误:', error);
+        });
+    }
+
+    // Initialize
+    renderProducts();
 </script>
-<!-- Rest of the HTML content -->
+```
+
+</body>
+</html>
