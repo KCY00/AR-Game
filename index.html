@@ -461,62 +461,81 @@
     }
 
     function renderProducts() {
+        console.log('renderProducts 开始执行');
+        console.log('产品数量:', products.length);
+        
         const grid = document.getElementById('productsGrid');
-        grid.innerHTML = products.map(product => `
-            <div class="product-card">
-                <img src="${product.image}" alt="${product.name}" class="product-image">
-                <div class="product-title">
-                    <div style="font-size: 0.9em; color: #666;">${product.model}</div>
-                    <div>${product.name}</div>
-                    <div style="font-size: 0.9em; color: #888; margin-top: 5px;">${product.description}</div>
-                </div>
-                <div class="price-section">
-                    <div class="price-option selected" onclick="selectPrice(${product.id}, 1)" id="price1-${product.id}">
-                        <div class="price-header">
-                            <div class="price-label">
-                                <input type="radio" name="price-${product.id}" class="price-radio" checked> 方案一
+        console.log('Grid元素:', grid);
+        
+        if (!grid) {
+            console.error('找不到 productsGrid 元素！');
+            alert('错误：找不到产品展示区域');
+            return;
+        }
+        
+        try {
+            const html = products.map(product => `
+                <div class="product-card">
+                    <img src="${product.image}" alt="${product.name}" class="product-image">
+                    <div class="product-title">
+                        <div style="font-size: 0.9em; color: #666;">${product.model}</div>
+                        <div>${product.name}</div>
+                        <div style="font-size: 0.9em; color: #888; margin-top: 5px;">${product.description}</div>
+                    </div>
+                    <div class="price-section">
+                        <div class="price-option selected" onclick="selectPrice(${product.id}, 1)" id="price1-${product.id}">
+                            <div class="price-header">
+                                <div class="price-label">
+                                    <input type="radio" name="price-${product.id}" class="price-radio" checked> 方案一
+                                </div>
+                                <div class="price-value">RM ${product.price1.toFixed(2)}</div>
                             </div>
-                            <div class="price-value">RM ${product.price1.toFixed(2)}</div>
+                            <div class="payment-method">
+                                💰 付款方式：需全额付款
+                            </div>
+                            <div class="insurance-info insurance-no">
+                                ⚠️ <strong>无全额保险</strong><br>
+                                如被海关拦截，最多退回10-15%
+                            </div>
                         </div>
-                        <div class="payment-method">
-                            💰 付款方式：需全额付款
-                        </div>
-                        <div class="insurance-info insurance-no">
-                            ⚠️ <strong>无全额保险</strong><br>
-                            如被海关拦截，最多退回10-15%
+                        
+                        <div class="price-option" onclick="selectPrice(${product.id}, 2)" id="price2-${product.id}">
+                            <div class="price-header">
+                                <div class="price-label">
+                                    <input type="radio" name="price-${product.id}" class="price-radio"> 方案二
+                                </div>
+                                <div class="price-value">RM ${product.price2.toFixed(2)}</div>
+                            </div>
+                            <div class="payment-method">
+                                💰 付款方式：先付40-45%订金
+                            </div>
+                            <div class="deposit-info">
+                                订金约 RM ${(product.price2 * 0.425).toFixed(2)}
+                            </div>
+                            <div style="font-size: 0.85em; color: #666; margin: 8px 0;">
+                                到货后付清尾款才发货
+                            </div>
+                            <div class="insurance-info insurance-yes">
+                                ✅ <strong>有全额保险</strong><br>
+                                如被海关拦截，全额退回订金
+                            </div>
                         </div>
                     </div>
-                    
-                    <div class="price-option" onclick="selectPrice(${product.id}, 2)" id="price2-${product.id}">
-                        <div class="price-header">
-                            <div class="price-label">
-                                <input type="radio" name="price-${product.id}" class="price-radio"> 方案二
-                            </div>
-                            <div class="price-value">RM ${product.price2.toFixed(2)}</div>
-                        </div>
-                        <div class="payment-method">
-                            💰 付款方式：先付40-45%订金
-                        </div>
-                        <div class="deposit-info">
-                            订金约 RM ${(product.price2 * 0.425).toFixed(2)}
-                        </div>
-                        <div style="font-size: 0.85em; color: #666; margin: 8px 0;">
-                            到货后付清尾款才发货
-                        </div>
-                        <div class="insurance-info insurance-yes">
-                            ✅ <strong>有全额保险</strong><br>
-                            如被海关拦截，全额退回订金
-                        </div>
-                    </div>
+                    <button class="add-to-cart" onclick="addToCart(${product.id}, event)">
+                        🛒 加入购物车
+                    </button>
                 </div>
-                <button class="add-to-cart" onclick="addToCart(${product.id})">
-                    🛒 加入购物车
-                </button>
-            </div>
-        `).join('');
+            `).join('');
+            
+            grid.innerHTML = html;
+            console.log('产品渲染完成！');
+        } catch (error) {
+            console.error('渲染错误:', error);
+            alert('渲染错误: ' + error.message);
+        }
     }
 
-    function addToCart(productId) {
+    function addToCart(productId, event) {
         const product = products.find(p => p.id === productId);
         const priceOption = selectedPrices[productId];
         const selectedPrice = priceOption === 1 ? product.price1 : product.price2;
@@ -536,14 +555,16 @@
         
         updateCart();
         
-        const button = event.target;
-        const originalText = button.textContent;
-        button.textContent = '✓ 已添加!';
-        button.style.background = '#2ecc71';
-        setTimeout(() => {
-            button.textContent = originalText;
-            button.style.background = '';
-        }, 1000);
+        if (event && event.target) {
+            const button = event.target;
+            const originalText = button.textContent;
+            button.textContent = '✓ 已添加!';
+            button.style.background = '#2ecc71';
+            setTimeout(() => {
+                button.textContent = originalText;
+                button.style.background = '';
+            }, 1000);
+        }
     }
 
     function removeFromCart(productId, priceOption) {
